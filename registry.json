@@ -4,15 +4,14 @@
   "homepage": "{{HOMEPAGE}}",
   "items": [
     {
-      "name": "hello-world",
-      "type": "registry:component",
-      "title": "Hello World",
-      "description": "A simple hello world component",
-      "registryDependencies": ["button"],
+      "name": "example",
+      "type": "registry:ui",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": [],
       "files": [
         {
-          "path": "registry/{{STYLE_NAME}}/blocks/hello-world/hello-world.tsx",
-          "type": "registry:component"
+          "path": "registry/{{STYLE_NAME}}/ui/example.tsx",
+          "type": "registry:ui"
         }
       ]
     }
