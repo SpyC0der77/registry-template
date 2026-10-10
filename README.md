@@ -1,23 +1,52 @@
-# registry-template
+# Registry template
 
-You can use the `shadcn` CLI to run your own component registry. Running your own
-component registry allows you to distribute your custom components, hooks, pages, and
-other files to any React project.
+A Next.js and Tailwind CSS v4 template for hosting a custom shadcn/ui component registry. This fork includes placeholders consumed by [create-shadcn-registry](https://github.com/SpyC0der77/create-shadcn-registry).
 
-> [!IMPORTANT]  
-> This template uses Tailwind v4. For Tailwind v3, see [registry-template-v3](https://github.com/shadcn-ui/registry-template-v3).
+## Scaffold a registry
 
-## Getting Started
+The easiest setup is through the companion CLI:
 
-This is a template for creating a custom registry using Next.js.
+```bash
+npx create-shadcn-registry
+```
 
-- The template uses a `registry.json` file to define components and their files.
-- The `shadcn build` command is used to build the registry.
-- The registry items are served as static files under `public/r/[name].json`.
-- The template also includes a route handler for serving registry items.
-- Every registry item are compatible with the `shadcn` CLI.
-- We have also added v0 integration using the `Open in v0` api.
+Choose your registry name, project folder, style, and homepage. See the [CLI README](https://github.com/SpyC0der77/create-shadcn-registry#readme) for its flags and component commands.
 
-## Documentation
+## Manual setup
 
-Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
+Use Node.js 22 and pnpm.
+
+```bash
+git clone https://github.com/SpyC0der77/registry-template.git
+cd registry-template
+pnpm install
+```
+
+Before building, replace `{{REGISTRY_NAME}}`, `{{HOMEPAGE}}`, and `{{STYLE_NAME}}` in the registry manifest and source paths. Make sure every file listed in `registry.json` exists and the demo page imports components you actually provide. The raw template is not ready to build without customization.
+
+```bash
+pnpm registry:build
+pnpm build
+pnpm start
+```
+
+For local development after customization, use `pnpm dev` and open [localhost:3000](http://localhost:3000).
+
+## Registry files
+
+- [`registry.json`](registry.json) defines item names, dependencies, types, and source files.
+- [`registry/`](registry/) contains component sources.
+- `pnpm registry:build` generates installable JSON under `public/r/`.
+- [`app/`](app/) contains the demo page and registry route handler.
+
+Deploy the generated app, then install a registry item into a consumer project using its public URL:
+
+```bash
+npx shadcn@latest add https://your-registry.example/r/example.json
+```
+
+Set `NEXT_PUBLIC_BASE_URL` to your deployment URL if you use the **Open in v0** button. The `lint` script calls the legacy `next lint` command. Review the lint configuration before using it with a newer Next.js release.
+
+## References
+
+[shadcn registry documentation](https://ui.shadcn.com/docs/registry). This fork is based on [shadcn-ui/registry-template](https://github.com/shadcn-ui/registry-template).
